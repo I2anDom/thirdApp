@@ -1,0 +1,30 @@
+
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Spring Security Example </title>
+</head>
+<body>
+<!--<div th:if="${param.error}">-->
+<!--    Invalid username and password.-->
+<!--</div>-->
+<!--<div th:if="${param.logout}">-->
+<!--    You have been logged out.-->
+<!--</div>-->
+<form th:action="@{/login}" method="POST">
+    <!--/*@thymesVar id="errorMessage" type="java.lang.String"*/-->
+    <div class="alert" th:if="${errorMessage}" th:text="${errorMessage}"></div>
+    <div><label> username : <input type="text" name="username"/> </label></div>
+    <div><label> Password: <input type="password" name="password"/> </label></div>
+    <div><input type="submit" value="Sign In"/></div>
+</form>
+
+<form th:action="@{/registration}" method="GET">
+<div><input type="submit" value="Sign up"></div>
+</form>
+<!--<form th:method="GET" th:action="@{/coffee_shop/registration}">-->
+<!--    <input type="submit" value="Register account">-->
+<!--</form>-->
+</body>
+</html>

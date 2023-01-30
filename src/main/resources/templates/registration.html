@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<body>
+    <form th:method="POST" th:action="@{/registration}" th:object="${user}"
+          style="position: relative; font-size: 30px; padding-top: 20px">
+        <div th:each="error : ${errorsList}">
+            <p style="font-size: 14px" th:text = "${error}"></p>
+        </div>
+        <input type="text" th:field = "*{username}" placeholder="Username">
+        <input type="text" th:field = "*{password}" placeholder="Password">
+        <input type="submit">
+    </form>
+</body>
+</html>

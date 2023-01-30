@@ -1,0 +1,109 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+<!--        .container {-->
+<!--            padding: 2rem 0rem;-->
+<!--        }-->
+
+<!--        h4 {-->
+<!--            margin: 2rem 0rem 1rem;-->
+<!--        }-->
+
+/*<!--        .table-image {-->*/
+        td, th {
+            vertical-align: center;
+            horiz-align: center;
+        }
+
+    .modal-header, h4, .close {
+        background-color: #5cb85c;
+        color:white !important;
+        text-align: center;
+        font-size: 30px;
+    }
+    .modal-footer {
+        background-color: #f9f9f9;
+    }
+<!--        /*}*/-->
+<!--        /*}*/-->
+    </style>
+</head>
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="main-page">Home <span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0" th:action="@{/add_order}" th:method="GET">
+            <a class="navbar-brand" th:text = "${user.username}"></a>
+        </form>
+        <div class="form-inline my-2 my-lg-0">
+<!--            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">-->
+<!--                <img src="/images/stash.png" width="30px" height="30px" data-toggle="modal" data-target="#myModal">-->
+            <input type="image"  width="30px" height="30px" data-toggle="modal" data-target="#myModal" src="/images/stash.png">
+<!--            </button>-->
+            <b style="margin-right: 20px; font-size: 14px; margin-top: 15px">1</b>
+        </div>
+        <form class="form-inline my-2 my-lg-0" th:action="@{/logout}" th:method="GET">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button>
+        </form>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-image">
+                <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Volume</th>
+                    <th scope="col">Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="coffee : ${coffeeList}">
+                    <td class="w-25">
+                        <img th:src="${coffee.imageSrc}" class="img-fluid img-thumbnail" alt="Sheep">
+                    </td>
+                    <td th:text = "${coffee.coffeeName}"></td>
+                    <td th:text = "${coffee.capacity} + ' l'"></td>
+                    <td th:text = "${coffee.price}"></td>
+                    <td>
+                        <form th:action="@{/{id}/add-to-order(id=${coffee.getId()})}" th:method="GET">
+                            <input type="submit" value="Add to order">
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<!-- Button trigger modal -->
+
+
+
+
+<!--<div th:each="coffee : ${coffeeList}">-->
+<!--    <p th:text = "${coffee.coffeeName}"></p>-->
+<!--    <p th:text = "${coffee.price} + ' UAH'"></p>-->
+<!--    <p th:text = "${coffee.capacity} + ' l'"></p>-->
+<!--</div>-->
+
+<!--<form style="float: right" th:action="@{/logout}" th:method="GET">-->
+<!--    <input type="submit" value="Logout">-->
+<!--</form>-->
+<!--<div style="float: right"><a href="/logout">logout</a></div>-->
+<!--<div style="float: right"; th:text = "${user.username}"></div>-->
+</html>
