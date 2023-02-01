@@ -12,6 +12,6 @@ import java.util.Collection;
 
 public interface OrderRepository extends JpaRepository<CoffeeOrder, Long> {
     @Query(
-            value = "SELECT u FROM CoffeeOrder u WHERE u.isActive = true")
+            value = "SELECT u FROM CoffeeOrder u WHERE u.active = true")
     Collection<CoffeeOrder> findAllActiveOrders();
 }

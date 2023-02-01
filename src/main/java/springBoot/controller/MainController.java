@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 import springBoot.entity.CoffeeEntity;
 import springBoot.entity.CoffeeOrder;
+import springBoot.entity.CoffeeOrderCoffeeEntity;
 import springBoot.entity.CoffeeUser;
 import springBoot.repository.CoffeeRepository;
+import springBoot.repository.OrderOrderedCoffeesRepository;
 import springBoot.repository.OrderRepository;
 import springBoot.service.UserService;
 
@@ -25,6 +27,8 @@ public class MainController {
     UserService userService;
     @Autowired
     OrderRepository orderRepository;
+    @Autowired
+    OrderOrderedCoffeesRepository orderOrderedCoffeesRepository;
     @GetMapping("/main-page")
     public ModelAndView mainPage(Model model){
         ModelAndView modelAndView = new ModelAndView();
@@ -40,13 +44,14 @@ public class MainController {
     public ModelAndView getEditPage(Model model, @PathVariable int id){
         ModelAndView modelAndView = new ModelAndView();
         CoffeeEntity coffee = coffeeRepository.findById((long) id).orElse(null);
-//        ArrayList<CoffeeOrder> ordersList = new ArrayList<>(orderRepository.findAllActiveOrders());
+        ArrayList<CoffeeOrder> ordersList = new ArrayList<>(orderRepository.findAllActiveOrders());
         CoffeeOrder order =  orderRepository.findAllActiveOrders()
                 .stream().findFirst()
                 .orElse(new CoffeeOrder());
-        order.addCoffeeToOrder(coffee);
-        orderRepository.save(order);
-
+        CoffeeOrderCoffeeEntity coffeeOrderCoffeeEntity = new CoffeeOrderCoffeeEntity();
+        coffeeOrderCoffeeEntity.setCoffee(coffee);
+        coffeeOrderCoffeeEntity.setOrder(order);
+        orderOrderedCoffeesRepository.save(coffeeOrderCoffeeEntity);
 
 //        if(user.getOrder() != null){
 //            user.getOrder().addCoffeeToOrder(coffee);
@@ -69,7 +74,7 @@ public class MainController {
     public void addOrder(){
         Set<CoffeeEntity> coffeeEntities = new HashSet<>();
         coffeeEntities.add(coffeeRepository.findById(36L).orElse(null));
-        CoffeeOrder order = new CoffeeOrder(null, coffeeEntities, true, null);
+        CoffeeOrder order = new CoffeeOrder();
         userService.addOrder(order);
     }
 }
